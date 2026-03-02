@@ -1,5 +1,8 @@
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Markov {
     private static final String BEGINS_SENTENCE = "__$";
@@ -21,8 +24,20 @@ public class Markov {
         return null;
     }
 
+    /**
+     * add in the data from a file - calls addLine
+     * @param filename as a string
+     */
     public void addFromFile(String filename){
-
+        try{
+            File f = new File(filename);
+            Scanner fs = new Scanner(f);
+            while(fs.hasNextLine()){
+                addLine(fs.next());
+            }
+        }catch (IOException e){
+            System.out.println("IOException");
+        }
     }
 
     public void addLine(String line){
