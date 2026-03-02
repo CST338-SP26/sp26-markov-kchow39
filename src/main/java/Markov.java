@@ -16,8 +16,12 @@ public class Markov {
         prevWord = BEGINS_SENTENCE;
     }
 
+    /**
+     * getter
+     * @return words
+     */
     public HashMap<String, ArrayList<String>> getWords(){
-        return null;
+        return words;
     }
 
     public String getSentence(){
@@ -33,15 +37,26 @@ public class Markov {
             File f = new File(filename);
             Scanner fs = new Scanner(f);
             while(fs.hasNextLine()){
-                addLine(fs.next());
+                addLine(fs.nextLine());
             }
         }catch (IOException e){
             System.out.println("IOException");
         }
     }
 
+    /**
+     * separates the words in the line and passes them through addWords if the line isn't empty
+     * @param line as a string
+     */
     public void addLine(String line){
-
+        if(line.isEmpty()){
+            System.out.println("Empty line");
+            return;
+        }
+        String[] separated = line.split(" ");
+        for (String s : separated) {
+            addWord(s);
+        }
     }
 
     public void addWord(String aWord){
