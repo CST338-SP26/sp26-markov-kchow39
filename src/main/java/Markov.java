@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Markov {
@@ -91,15 +92,31 @@ public class Markov {
         prevWord = aWord;
     }
 
+    /**
+     * gets a random index and uses it to return a word
+     * @param aWord as a string that is a key used to retrieve a list
+     * @return the random word
+     */
     public String randomWord(String aWord){
-        return null;
+        Random r = new Random();
+        return words.get(aWord).get(r.nextInt(words.get(aWord).size()-1));
     }
 
+    /**
+     * loops through punctuation marks and checks if the passed in word has one of them
+     * @param aWord as a string. An entire word - noly care about the last char
+     * @return true if punctuation found
+     */
     public static boolean endsWithPunctuation(String aWord){
+        for(int i = 0; i < PUNCTUATION_MARKS.length(); i++){
+            if(PUNCTUATION_MARKS.charAt(i) == aWord.charAt(aWord.length()-1)){
+                return true;
+            }
+        }
         return false;
     }
 
     public String toString(){
-        return null;
+        return words.toString();
     }
 }
