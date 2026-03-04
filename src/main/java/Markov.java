@@ -24,8 +24,23 @@ public class Markov {
         return words;
     }
 
+    /**
+     * iterates through a sentence, r
+     * @return a string containing a full sentence
+     */
     public String getSentence(){
-        return null;
+        StringBuilder sb = new StringBuilder();
+        String currentWord = randomWord(BEGINS_SENTENCE);
+        while(true){
+            if(endsWithPunctuation(currentWord)){
+                sb.append(currentWord);
+                break;
+            } else {
+                sb.append(currentWord).append(" ");
+                currentWord = randomWord(currentWord);
+            }
+        }
+        return sb.toString();
     }
 
     /**
@@ -59,8 +74,21 @@ public class Markov {
         }
     }
 
+    /**
+     * adds a word to the hashmap
+     * @param aWord as a String this is the current word
+     */
     public void addWord(String aWord){
-
+        if(endsWithPunctuation(prevWord)){
+            words.get(BEGINS_SENTENCE).add(aWord);
+        } else {
+            if(words.containsKey(prevWord)){
+                words.get(prevWord).add(aWord);
+            } else {
+                words.put(prevWord, new ArrayList<>());
+            }
+        }
+        prevWord = aWord;
     }
 
     public String randomWord(String aWord){
