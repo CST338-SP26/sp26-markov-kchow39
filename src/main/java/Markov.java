@@ -9,7 +9,7 @@ public class Markov {
     private static final String BEGINS_SENTENCE = "__$";
     private static final String PUNCTUATION_MARKS = ".!?$";
     private String prevWord;
-    private HashMap<String, ArrayList<String>> words;
+    private final HashMap<String, ArrayList<String>> words;
 
     public Markov(){
         words = new HashMap<>();
@@ -69,27 +69,31 @@ public class Markov {
             System.out.println("Empty line");
             return;
         }
+        line = line.replaceAll("\n", "").replaceAll("\t", "").strip();
         String[] separated = line.split(" ");
         for (String s : separated) {
-            addWord(s);
+            if(!s.isEmpty()) {
+                addWord(s);
+            }
         }
     }
 
     /**
      * adds a word to the hashmap
-     * @param aWord as a String this is the current word
+     * @param currentWord as a String
      */
-    public void addWord(String aWord){
+    public void addWord(String currentWord){
         if(endsWithPunctuation(prevWord)){
-            words.get(BEGINS_SENTENCE).add(aWord);
+            words.get(BEGINS_SENTENCE).add(currentWord);
         } else {
             if(words.containsKey(prevWord)){
-                words.get(prevWord).add(aWord);
+                words.get(prevWord).add(currentWord);
             } else {
                 words.put(prevWord, new ArrayList<>());
+                words.get(prevWord).add(currentWord);
             }
         }
-        prevWord = aWord;
+        prevWord = currentWord;
     }
 
     /**
@@ -99,12 +103,12 @@ public class Markov {
      */
     public String randomWord(String aWord){
         Random r = new Random();
-        return words.get(aWord).get(r.nextInt(words.get(aWord).size()-1));
+        return words.get(aWord).get(r.nextInt(words.get(aWord).size()));
     }
 
     /**
      * loops through punctuation marks and checks if the passed in word has one of them
-     * @param aWord as a string. An entire word - noly care about the last char
+     * @param aWord as a string. An entire word - only care about the last char
      * @return true if punctuation found
      */
     public static boolean endsWithPunctuation(String aWord){

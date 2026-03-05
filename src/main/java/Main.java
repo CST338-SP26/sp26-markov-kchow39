@@ -5,7 +5,7 @@ public class Main {
         markov.addFromFile("cloudy.txt");
         markov.addFromFile("phrases.txt");
         markov.addFromFile("azkaban.txt");
-        markov.addFromFile("hamlet.txt");
+//        markov.addFromFile("hamlet.txt");
         markov.addFromFile("twok.txt");
 
         System.out.println(markov);
